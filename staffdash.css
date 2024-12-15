@@ -1,0 +1,67 @@
+/* General Styles */
+body {
+    display: flex;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 200px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    height: 100vh; /* Full height */
+    position: fixed; /* Keep it fixed on the left */
+}
+
+.sidebar h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.sidebar nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar nav ul li {
+    margin: 10px 0;
+}
+
+.sidebar nav ul li a {
+    text-decoration: none;
+    color: #333;
+    padding: 8px 15px;
+    display: block;
+    transition: background 0.3s;
+}
+
+.sidebar nav ul li a:hover {
+    background-color: #ddd;
+}
+
+/* Main Content Styles */
+.main-content {
+    margin-left: 220px; /* Space for sidebar */
+    padding: 20px;
+    flex: 1; /* Allow main content to grow */
+    padding-left: 50px;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+header h1 {
+    color: #333;
+}
+
+/* Section Styles */
+main section {
+    margin-bottom: 30px;
+}
+
+main h2 {
+    color: #007BFF; /* Accent color for section headings */
+}

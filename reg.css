@@ -1,0 +1,86 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f7; /* Light background color */
+}
+
+.logincontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.parent {
+    background-color: #ffffff; /* White background for the form */
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+    padding: 30px;
+    width: 400px; /* Fixed width for the form */
+}
+
+.head {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333; /* Dark text color */
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px; /* Margin for better spacing */
+    font-weight: bold; /* Bold labels */
+}
+
+.input1, .input2 {
+    width: 100%; /* Full width inputs */
+    padding: 10px; /* Padding for inputs */
+    margin-bottom: 15px; /* Space between inputs */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 4px; /* Rounded borders */
+    font-size: 16px; /* Font size for inputs */
+}
+
+.input1:focus, .input2:focus {
+    border-color: #007bff; /* Blue border on focus */
+    outline: none; /* Remove default outline */
+}
+
+select.input1 {
+    padding: 10px;
+}
+
+.button1 {
+    background-color: #007bff; /* Blue background for button */
+    color: white; /* White text color */
+    padding: 10px 15px; /* Padding for the button */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Font size for button */
+    width: 100%; /* Full width button */
+}
+
+.button1:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.abc {
+    text-align: center; /* Centered text for the link */
+    margin-top: 15px; /* Space above the link */
+}
+
+.abc a {
+    color: #007bff; /* Link color */
+    text-decoration: none; /* Remove underline */
+}
+
+.abc a:hover {
+    text-decoration: underline; /* Underline on hover */
+}

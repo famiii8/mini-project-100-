@@ -1,0 +1,118 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #faf5f5;
+    background-color: #ffffff; /* Change background to white */
+    display: flex; /* Use flexbox to center the image */
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    height: 100vh; /* Full height of the viewport */
+}
+
+.image-container {
+    text-align: center; /* Center the image and text */
+    margin-top: 20px; /* Space above the image */
+}
+
+.image-container img {
+    max-width: 100%; /* Responsive image */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.nanbar {
+    width: 100%;
+    background-color: rgb(248, 154, 87);
+    padding: 10px 10px;
+    position: fixed; /* Fix the navbar at the top */
+    top: 0; /* Position it at the top */
+    left: 0; /* Align it to the left */
+    z-index: 1000; /* Ensure it stays above other content */
+}
+.nav-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.navbar-title {
+    font-size: 24px;
+    color: #ffffff;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 0 20px;
+}
+
+.link {
+    display: flex;
+    gap: 15px; /* Space between links */
+}
+
+.link a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease;
+    border-radius: 5px; /* Rounded corners */
+}
+
+.link a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Subtle hover effect */
+}
+
+.abcd {
+    text-align: center;
+    margin-top: 150px; /* Space above the welcome message */
+    font-family:'Open Sans', sans-serif; /* Use the Lobster font */
+    font-size: 48px; /* Adjust the font size */
+    color: #4A90E2; /* Change the text color */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+    letter-spacing: 2px; /* Add some space between letters */
+    line-height: 1.2; /* Adjust line height for better spacing */
+}
+
+.abcd h1 {
+    font-size: 32px;
+    color: rgb(255, 255, 255);
+    margin-bottom: 10px; /* Space between the heading and subheading */
+}
+
+.abcd h2 {
+    font-size: 24px;
+    color: rgb(250, 249, 249); /* Slightly lighter color for the subheading */
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        flex-direction: column; /* Stack links on smaller screens */
+        align-items: flex-start;
+    }
+
+    .link {
+        flex-direction: column; /* Stack links */
+        gap: 10px;
+    }
+
+    .navbar-title {
+        padding: 10px 0;
+    }
+
+    .link a {
+        padding: 8px 10px;
+        font-size: 16px;
+    }
+
+    .abcd h1 {
+        font-size: 28px; /* Smaller text on mobile */
+    }
+}
