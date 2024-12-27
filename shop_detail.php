@@ -31,17 +31,56 @@ for ($time = $start_time; $time <= $end_time; $time += 30 * 60) {
 
 // Check if the time slot has already been booked 5 times
 $booking_error = '';
-if (isset($_POST['booking_date']) && isset($_POST['time_slot'])) {
-    $booking_date = $_POST['booking_date'];
-    $time_slot = $_POST['time_slot'];
+// Only process this block if the request is for updating the slots
+if (isset($_GET['shop_id']) && isset($_GET['booking_date'])) {
+    $shop_id = $_GET['shop_id'];
+    $booking_date = $_GET['booking_date'];
 
-    $check_booking_query = "SELECT COUNT(*) as booking_count FROM bookings WHERE shop_id = '$shop_id' AND booking_date = '$booking_date' AND time_slot = '$time_slot'";
-    $booking_check_result = mysqli_query($conn, $check_booking_query);
-    $booking_check = mysqli_fetch_assoc($booking_check_result);
-
-    if ($booking_check['booking_count'] >= 5) {
-        $booking_error = 'Max bookings reached for this time slot. Please choose another time slot.';
+    // Generate time slots
+    $time_slots = [];
+    $start_time = strtotime('11:00');
+    $end_time = strtotime('18:00');
+    for ($time = $start_time; $time <= $end_time; $time += 30 * 60) {
+        $time_slots[] = date('H:i', $time);
     }
+
+    // Fetch slot availability for the selected date
+    $slot_availability = [];
+    foreach ($time_slots as $slot) {
+        $check_slot_query = "SELECT COUNT(*) as booking_count FROM bookings WHERE shop_id = '$shop_id' AND booking_date = '$booking_date' AND time_slot = '$slot'";
+        $slot_result = mysqli_query($conn, $check_slot_query);
+        $slot_data = mysqli_fetch_assoc($slot_result);
+        $slot_availability[$slot] = $slot_data['booking_count'];
+    }
+
+    // Return only the table rows for the available slots
+    echo '<tbody>';
+    foreach ($time_slots as $slot) {
+        echo '<tr>';
+        echo '<td>' . $slot . '</td>';
+        echo '<td>';
+        echo $slot_availability[$slot] >= 5 ? 'Fully Booked' : (5 - $slot_availability[$slot]) . ' Slots Available';
+        echo '</td>';
+        echo '</tr>';
+    }
+    echo '</tbody>';
+    
+    exit; // End the PHP script after sending the response
+}
+
+
+// Fetch slot availability dynamically based on selected date
+$selected_date = date('Y-m-d'); // Default to today's date
+if (isset($_GET['booking_date'])) {
+    $selected_date = $_GET['booking_date'];
+}
+
+$slot_availability = [];
+foreach ($time_slots as $slot) {
+    $check_slot_query = "SELECT COUNT(*) as booking_count FROM bookings WHERE shop_id = '$shop_id' AND booking_date = '$selected_date' AND time_slot = '$slot'";
+    $slot_result = mysqli_query($conn, $check_slot_query);
+    $slot_data = mysqli_fetch_assoc($slot_result);
+    $slot_availability[$slot] = $slot_data['booking_count'];
 }
 
 mysqli_close($conn);
@@ -93,7 +132,24 @@ mysqli_close($conn);
             return valid; // Return whether the input is valid
         }
 
-        // Function to check booking error before form submission
+        function updateSlots() {
+    const bookingDate = document.getElementById('booking_date').value;
+    const shopId = '<?php echo $shop_id; ?>';  // Assuming $shop_id is embedded in JavaScript
+
+    if (bookingDate) {
+        fetch(shop_detail.php?shop_id=${shopId}&booking_date=${bookingDate})
+            .then(response => response.text())
+            .then(data => {
+                // Update the slots table body with the new slot data
+                const slotsTableBody = document.querySelector('#slots_table tbody');
+                slotsTableBody.innerHTML = data; // Only update the table body, not the form
+            });
+    }
+}
+
+
+
+
         function checkBookingError() {
             const bookingError = '<?php echo $booking_error; ?>';
             if (bookingError) {
@@ -129,7 +185,7 @@ mysqli_close($conn);
                 <input type="date" id="booking_date" name="booking_date" 
                        min="<?php echo date('Y-m-01'); ?>" 
                        max="<?php echo date('Y-m-t'); ?>" 
-                       required>
+                       required onchange="updateSlots()">
                 
                 <label for="time_slot">Select Time Slot:</label>
                 <select id="time_slot" name="time_slot" required>
@@ -158,10 +214,31 @@ mysqli_close($conn);
                 <h4 id="total_price">Total Price: 0.00</h4>
 
                 <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+               
                 <input type="hidden" name="shop_id" value="<?php echo $shop_id; ?>">
-                <input type="submit" value="Book Slot">
+
+                <button type="submit" name="submit_booking">Confirm Booking</button>
             </form>
 
+            <h2>Available Slots for <?php echo $selected_date; ?></h2>
+            <table border="1" id="slots_table">
+                <thead>
+                    <tr>
+                        <th>Time Slot</th>
+                        <th>Availability</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($time_slots as $slot): ?>
+                        <tr>
+                            <td><?php echo $slot; ?></td>
+                            <td>
+                                <?php echo $slot_availability[$slot] >= 5 ? 'Fully Booked' : (5 - $slot_availability[$slot]) . ' Slots Available'; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         <?php else: ?>
             <p>Shop not found.</p>
         <?php endif; ?>

@@ -90,8 +90,8 @@ if (isset($_POST['submit'])) {
             echo "<script>alert('Sorry, your file was not uploaded.')</script>";
         } else {
             if (move_uploaded_file($_FILES["ration_card_image"]["tmp_name"], $target_file)) {
-                $sql = "INSERT INTO `users`(`name`, `phno`, `email`, `address`, `pincode`, `rcardno`, `card_color`, `members`, `ration_card_image`, `password`) VALUES ('$name','$phno','$email','$address','$pincode','$rcard','$card_color','$members','$target_file','$pwd')";
-                $sql1 = "INSERT INTO `login`(`email`, `password`, `usertype`) VALUES ('$email','$pwd',0)";
+                $sql = "INSERT INTO users(name, phno, email, address, pincode, rcardno, card_color, members, ration_card_image, password) VALUES ('$name','$phno','$email','$address','$pincode','$rcard','$card_color','$members','$target_file','$pwd')";
+                $sql1 = "INSERT INTO login(email, password, usertype) VALUES ('$email','$pwd',0)";
 
                 $data = mysqli_query($con, $sql);
                 $data1 = mysqli_query($con, $sql1);
